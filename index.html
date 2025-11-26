@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alerta Fumaça</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☁️📖</text></svg>">
+</head>
+<body>
+    <!-- Tela de Login -->
+    <div id="login-screen" class="screen active">
+        <header class="header">
+            <div class="logo-container">
+                <span class="logo-icon">☁️📖</span>
+                <span class="logo-text">Alerta Fumaça</span>
+            </div>
+        </header>
+        <div class="content">
+            <h1 class="screen-title">Login</h1>
+            <form id="login-form" class="form">
+                <div class="input-group">
+                    <input type="email" id="login-email" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="login-password" placeholder="Senha" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <p class="link-text">
+                Ainda não possui cadastro? <a href="#" id="go-to-signup">Cadastre-se</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Tela de Cadastro -->
+    <div id="signup-screen" class="screen">
+        <header class="header">
+            <div class="logo-container">
+                <span class="logo-icon">☁️📖</span>
+                <span class="logo-text">Alerta Fumaça</span>
+            </div>
+        </header>
+        <div class="content">
+            <h1 class="screen-title">Cadastre-se</h1>
+            <form id="signup-form" class="form">
+                <div class="input-group">
+                    <input type="text" id="signup-name" placeholder="Nome" required>
+                </div>
+                <div class="input-group">
+                    <input type="email" id="signup-email" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="signup-password" placeholder="Senha" required>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="signup-location" placeholder="Localização" class="with-icon" required>
+                    <span class="input-icon">📍</span>
+                </div>
+                <div class="input-group">
+                    <select id="signup-risk-profile" class="with-icon" required>
+                        <option value="">Perfil de Risco</option>
+                        <option value="alto">Alto (Doença respiratória crônica)</option>
+                        <option value="medio">Médio (Idoso ou sensível)</option>
+                        <option value="baixo">Baixo (Cidadão comum)</option>
+                        <option value="rural">Rural (Produtor rural)</option>
+                    </select>
+                    <span class="input-icon">▼</span>
+                </div>
+                <button type="button" class="btn btn-primary" id="open-preferences">Selecionar preferências de alerta</button>
+                <p class="link-text">
+                    Já possui cadastro? <a href="#" id="go-to-login">Efetue o Login</a>
+                </p>
+                <button type="submit" class="btn btn-primary btn-confirm">Confirmar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Preferências -->
+    <div id="preferences-modal" class="modal">
+        <div class="modal-content">
+            <h2>Preferências:</h2>
+            <form id="preferences-form">
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" id="pref-notifications" checked>
+                        <span>Notificações</span>
+                    </label>
+                </div>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" id="pref-system-notifications" checked>
+                        <span>Notificações do sistema</span>
+                    </label>
+                </div>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" id="pref-sound-alerts" checked>
+                        <span>Alertas sonoros</span>
+                    </label>
+                </div>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" id="pref-smoke-alerts" checked>
+                        <span>Alertas de fumaça</span>
+                    </label>
+                </div>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" id="pref-fire-alerts" checked>
+                        <span>Alertas de fogo</span>
+                    </label>
+                </div>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" id="pref-economy-mode">
+                        <span>Modo econômico</span>
+                    </label>
+                </div>
+                <button type="button" class="btn btn-primary" id="confirm-preferences">Confirmar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tela Principal - Mapa -->
+    <div id="map-screen" class="screen">
+        <header class="header">
+            <div class="logo-container">
+                <span class="logo-icon">☁️📖</span>
+                <span class="logo-text">Alerta Fumaça</span>
+            </div>
+            <button class="menu-btn" id="menu-btn">☰</button>
+        </header>
+        <div class="content">
+            <div class="input-group">
+                <input type="text" id="add-location-input" placeholder="Adicionar Localização" class="with-icon">
+                <span class="input-icon">📍</span>
+            </div>
+            <div id="map-container" class="map-container">
+                <div class="map-placeholder">
+                    <div class="map-pin large-pin"></div>
+                    <div class="map-pin"></div>
+                    <div class="map-pin"></div>
+                    <div class="map-pin"></div>
+                    <p class="map-text">Mapa interativo</p>
+                    <p class="map-subtext">Localização atual destacada</p>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="check-irr-btn">Verificar IRR</button>
+                <button class="btn btn-primary" id="check-fires-btn">Verificar Incêndios</button>
+                <button class="btn btn-primary" id="alert-fire-btn">Alertar Incêndio +</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela de Detalhes do IRR -->
+    <div id="irr-details-screen" class="screen">
+        <header class="header">
+            <div class="logo-container">
+                <span class="logo-icon">☁️📖</span>
+                <span class="logo-text">Alerta Fumaça</span>
+            </div>
+            <button class="menu-btn" id="menu-btn-irr">☰</button>
+        </header>
+        <div class="content">
+            <div class="input-group">
+                <input type="text" id="irr-location-input" placeholder="Localização" class="with-icon" readonly>
+                <span class="input-icon">📍</span>
+            </div>
+            <div class="irr-info">
+                <h2>IRR (Índice de risco respiratório):</h2>
+                <div class="irr-level" id="irr-level-display">Muito Alto</div>
+                <div class="irr-details">
+                    <h3>Principais focos na região:</h3>
+                    <ul id="fire-foci-list">
+                        <li>Rua Alfredo Neves 15</li>
+                        <li>Rua São Paulo 1200</li>
+                    </ul>
+                    <h3>Ações Sugeridas:</h3>
+                    <ul id="suggested-actions-list">
+                        <li>Utilizar máscara</li>
+                        <li>Se Afastar da Região</li>
+                    </ul>
+                    <h3>Doenças e sintomas na região:</h3>
+                    <ul id="diseases-list">
+                        <li>Rinite</li>
+                        <li>Asma</li>
+                    </ul>
+                </div>
+                <div class="irr-actions">
+                    <button class="btn btn-primary" id="share-graph-btn">Compartilhar Gráfico de dispersão</button>
+                    <button class="btn btn-secondary" id="back-to-map-btn">Voltar ao Mapa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela de Diário de Sintomas -->
+    <div id="symptoms-screen" class="screen">
+        <header class="header">
+            <div class="logo-container">
+                <span class="logo-icon">☁️📖</span>
+                <span class="logo-text">Alerta Fumaça</span>
+            </div>
+            <button class="menu-btn" id="menu-btn-symptoms">☰</button>
+        </header>
+        <div class="content">
+            <h1 class="screen-title">Diário de sintomas:</h1>
+            <p class="instruction-text">Registre como você está se sentindo hoje:</p>
+            <p class="help-text">Esses registros ajudam a entender como o risco afetou sua saúde.</p>
+            <form id="symptoms-form">
+                <div class="symptoms-checkboxes">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="symptom" value="falta-ar">
+                        <span>Falta de ar</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="symptom" value="tosse">
+                        <span>Tosse</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="symptom" value="ardencia-olhos">
+                        <span>Ardência nos olhos</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="symptom" value="cansaco">
+                        <span>Cansaço excessivo</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="symptom" value="dor-cabeca">
+                        <span>Dor de cabeça</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="symptom" value="crise-asma">
+                        <span>Crise de asma</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="symptom" value="crise-rinite">
+                        <span>Crise de rinite</span>
+                    </label>
+                </div>
+                <div class="input-group">
+                    <textarea id="symptoms-observation" placeholder="Observação:" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Registrar sintomas +</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Alerta Emergencial -->
+    <div id="emergency-alert-modal" class="modal emergency-modal">
+        <div class="modal-content emergency-content">
+            <div class="emergency-icon">⚠️</div>
+            <h2>Alerta Emergencial!</h2>
+            <p id="emergency-message">Risco muito alto! Fumaça em 30 minutos</p>
+            <button class="btn btn-primary" id="dismiss-alert">Ok! Entendi</button>
+        </div>
+    </div>
+
+    <!-- Modal de Verificação de Incêndios -->
+    <div id="fires-check-modal" class="modal">
+        <div class="modal-content">
+            <h2>Verificação de Incêndios</h2>
+            <div id="fires-check-results">
+                <p id="fires-check-location" class="check-location"></p>
+                <div id="fires-list-container">
+                    <p class="loading-text">Verificando...</p>
+                </div>
+            </div>
+            <button class="btn btn-primary" id="close-fires-modal">Fechar</button>
+        </div>
+    </div>
+
+    <!-- Modal de Cadastro de Incêndio -->
+    <div id="alert-fire-modal" class="modal">
+        <div class="modal-content">
+            <h2>Alertar Incêndio</h2>
+            <p class="modal-description">Informe os detalhes do incêndio para ajudar outros usuários:</p>
+            <form id="alert-fire-form">
+                <div class="input-group">
+                    <label for="fire-location-input" class="input-label">Localização do Incêndio *</label>
+                    <input type="text" id="fire-location-input" placeholder="Ex: Rua das Flores, 123" class="with-icon" required>
+                    <span class="input-icon">📍</span>
+                </div>
+                <div class="input-group">
+                    <label for="fire-description-input" class="input-label">Descrição (opcional)</label>
+                    <textarea id="fire-description-input" placeholder="Descreva o que você observou..." rows="3"></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="fire-severity-select" class="input-label">Gravidade</label>
+                    <select id="fire-severity-select" class="with-icon">
+                        <option value="baixa">Baixa</option>
+                        <option value="media" selected>Média</option>
+                        <option value="alta">Alta</option>
+                        <option value="critica">Crítica</option>
+                    </select>
+                    <span class="input-icon">▼</span>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="cancel-fire-alert">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="submit-fire-alert">Enviar Alerta</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Banner de Alerta (para tela de login com alerta) -->
+    <div id="alert-banner" class="alert-banner hidden">
+        <div class="alert-content">
+            <span class="alert-icon">⚠️</span>
+            <div class="alert-text">
+                <strong>Fumaça próxima a sua região!</strong>
+                <span>Nível de IRR: <span id="alert-irr-level">Muito Alto</span></span>
+            </div>
+            <button class="close-alert-btn" id="close-alert-banner" aria-label="Fechar alerta">×</button>
+        </div>
+    </div>
+
+    <!-- Menu Lateral -->
+    <div id="side-menu" class="side-menu">
+        <div class="menu-header">
+            <span class="logo-icon">☁️📖</span>
+            <span class="logo-text">Alerta Fumaça</span>
+            <button class="close-menu-btn" id="close-menu">×</button>
+        </div>
+        <nav class="menu-nav">
+            <a href="#" class="menu-item" data-screen="map-screen">Mapa</a>
+            <a href="#" class="menu-item" data-screen="irr-details-screen">IRR Detalhes</a>
+            <a href="#" class="menu-item" data-screen="symptoms-screen">Diário de Sintomas</a>
+            <a href="#" class="menu-item" id="open-preferences-menu">Preferências</a>
+            <a href="#" class="menu-item" id="logout-btn">Sair</a>
+        </nav>
+    </div>
+
+    <div id="menu-overlay" class="menu-overlay"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+

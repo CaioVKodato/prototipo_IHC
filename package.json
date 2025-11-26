@@ -1,0 +1,18 @@
+{
+  "name": "alerta-fumaca",
+  "version": "1.0.0",
+  "description": "Sistema de alerta de fumaça para proteção respiratória",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "alerta",
+    "fumaca",
+    "saude",
+    "respiratorio"
+  ],
+  "author": "Arthur Mendes, Caio Kodato, Vitor Hugo",
+  "license": "MIT"
+}
+
